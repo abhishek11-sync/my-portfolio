@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taking over a support backlog nobody wants to own — Abhishek KC</title>
+<meta name="description" content="An unsorted queue and a client who had stopped believing the status reports. Triage, severity gates, and rebuilding trust in the weekly update.">
+<meta name="theme-color" content="#070C18">
+<meta property="og:title" content="Taking over a support backlog nobody wants to own">
+<meta property="og:description" content="An unsorted queue and a client who had stopped believing the status reports. Triage, severity gates, and rebuilding trust in the weekly update.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://abhishek11-sync.github.io/my-portfolio/writing/taking-over-a-support-backlog.html">
+<meta property="og:image" content="https://abhishek11-sync.github.io/my-portfolio/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070C18'/%3E%3Ctext x='16' y='22' font-family='Helvetica,Arial' font-size='15' font-weight='700' fill='%23E3A857' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Taking over a support backlog nobody wants to own",
+  "description": "An unsorted queue and a client who had stopped believing the status reports. Triage, severity gates, and rebuilding trust in the weekly update.",
+  "datePublished": "2026-07-20",
+  "author": { "@type": "Person", "name": "Abhishek KC", "url": "https://abhishek11-sync.github.io/my-portfolio/" },
+  "publisher": { "@type": "Person", "name": "Abhishek KC" },
+  "mainEntityOfPage": "https://abhishek11-sync.github.io/my-portfolio/writing/taking-over-a-support-backlog.html"
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{
+  --bg:#070C18;--raise:#111A2C;--raise2:#141E32;
+  --ink:#E3EAF4;--ink2:#A4B2C6;--muted:#6B7A91;
+  --rule:#1C2739;--rule2:#15202F;
+  --brass:#E3A857;--brass-dim:#7F5F2E;--brass-wash:rgba(227,168,87,.10);
+  --blue:#7FA9DC;--on-accent:#070C18;--grain:.05;--scheme:dark;
+  --sans:"Schibsted Grotesk",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#F1F4FA;--raise:#FFFFFF;--raise2:#EFF3F9;
+    --ink:#111827;--ink2:#46536B;--muted:#78859B;
+    --rule:#DCE3EE;--rule2:#E9EEF5;
+    --brass:#8A5A0E;--brass-dim:#C9A05A;--brass-wash:rgba(227,168,87,.18);
+    --blue:#25578C;--on-accent:#2A1B03;--grain:.022;--scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F1F4FA;--raise:#FFFFFF;--raise2:#EFF3F9;
+  --ink:#111827;--ink2:#46536B;--muted:#78859B;
+  --rule:#DCE3EE;--rule2:#E9EEF5;
+  --brass:#8A5A0E;--brass-dim:#C9A05A;--brass-wash:rgba(227,168,87,.18);
+  --blue:#25578C;--on-accent:#2A1B03;--grain:.022;--scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;color-scheme:var(--scheme)}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--brass-wash);color:var(--ink)}
+a{color:var(--blue);text-decoration:none}
+a:hover{color:var(--ink)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:3px}
+.grain{
+  position:fixed;inset:0;z-index:80;pointer-events:none;opacity:var(--grain);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:99;background:var(--brass);transform:scaleX(0);transform-origin:0 50%}
+@supports (animation-timeline:scroll()){.progress{animation:grow linear;animation-timeline:scroll(root)}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+.bar{
+  position:sticky;top:0;z-index:94;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:14px 32px;background:var(--bg);border-bottom:1px solid var(--rule);
+}
+.bar a.home{
+  font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink);
+  display:inline-flex;align-items:center;gap:9px;
+}
+.bar a.home:hover{color:var(--brass)}
+.bar .right{display:flex;align-items:center;gap:18px;font-size:13.5px;color:var(--muted)}
+
+.wrap{max-width:760px;margin:0 auto;padding:64px 32px 96px;position:relative;z-index:1}
+.kicker{
+  font-family:var(--serif);font-style:italic;font-size:18px;color:var(--brass);
+  margin:0 0 12px;
+}
+h1{
+  font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.14;
+  letter-spacing:-.014em;margin:0 0 18px;text-wrap:balance;
+}
+.meta{
+  display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;
+  font-size:13px;color:var(--muted);
+  padding-bottom:30px;border-bottom:1px solid var(--rule);margin-bottom:34px;
+}
+.meta .dot{width:4px;height:4px;border-radius:50%;background:var(--rule)}
+.standfirst{font-size:20px;line-height:1.6;color:var(--ink2);margin:0 0 30px;text-wrap:pretty}
+h2{
+  font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.22;
+  letter-spacing:-.008em;margin:44px 0 14px;text-wrap:balance;
+}
+p{margin:0 0 20px;color:var(--ink2);text-wrap:pretty}
+strong{color:var(--ink);font-weight:600}
+em{font-style:italic}
+ul,ol{margin:0 0 22px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+li{position:relative;padding-left:30px;color:var(--ink2)}
+li::before{content:"";position:absolute;left:0;top:13px;width:9px;height:1px;background:var(--brass-dim)}
+ol{counter-reset:n}
+ol li{counter-increment:n}
+ol li::before{
+  content:counter(n);top:0;width:auto;height:auto;background:none;
+  font-size:13px;font-weight:600;color:var(--brass);
+}
+blockquote{
+  font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.5;
+  color:var(--ink);border-left:2px solid var(--brass-dim);
+  padding:4px 0 4px 22px;margin:30px 0;
+}
+.note{
+  border:1px solid var(--rule);border-radius:12px;background:var(--raise);
+  padding:22px 24px;margin:30px 0;font-size:16px;
+}
+.note p:last-child{margin-bottom:0}
+.note .lbl{
+  font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--brass);
+  display:block;margin-bottom:10px;
+}
+.fill{color:var(--brass);font-weight:600}
+.end{
+  margin-top:56px;padding-top:28px;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;
+}
+.end .who{font-size:15px;color:var(--ink2);max-width:46ch}
+.btn{
+  font-family:var(--sans);display:inline-flex;align-items:center;gap:8px;
+  padding:11px 17px;border-radius:9px;font-size:14px;font-weight:600;
+  border:1px solid var(--brass);color:var(--brass);background:var(--brass-wash);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055);white-space:nowrap;
+}
+.btn:hover{background:var(--brass);color:var(--on-accent)}
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .wrap{padding:40px 22px 72px}
+  .bar{padding:12px 22px}
+  h1{font-size:32px}
+  h2{font-size:22px}
+  .standfirst{font-size:18px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.progress{display:none}}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .grain,.progress,.bar,.end{display:none!important}
+  .wrap{max-width:none;padding:0}
+  h1,h2,strong{color:#000}
+  p,li,.standfirst{color:#222}
+  @page{margin:16mm}
+}
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="bar">
+  <a class="home" href="../index.html">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Abhishek KC
+  </a>
+  <div class="right"><span>Notes from delivery</span></div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Notes from delivery</p>
+  <h1>Taking over a support backlog nobody wants to own</h1>
+  <div class="meta">
+    <span>July 2026</span><span class="dot"></span>
+    <span>4 min read</span><span class="dot"></span>
+    <span>Support operations</span>
+  </div>
+  <p class="standfirst">You inherit two things when you take over a neglected queue: a list of open items, and a client who has stopped believing your status reports. Only one of those is fixed by closing tickets.</p>
+
+
+  <p>Taking over an unowned support backlog is one of the more thankless things in delivery, and one of the more instructive. Nothing in the handover tells you which of the open items still matter, and the person who could have told you has usually moved on.</p>
+
+  <p>The instinct is to start closing things. Volume is the visible number, so reducing it feels like progress and it is easy to report. I have learned to resist that for the first week, because the count is not actually the problem.</p>
+
+  <h2>What you have really inherited</h2>
+
+  <p>Two things, and they need different work.</p>
+
+  <ul>
+    <li><strong>A list of open items</strong>, of which a meaningful share are duplicates, already resolved, or no longer relevant. This is a data problem and it is tractable.</li>
+    <li><strong>A client who has stopped trusting the report.</strong> This is the harder one, and closing tickets does not touch it. If the last six status updates said things were improving and nothing changed, a seventh saying the same will be read as noise.</li>
+  </ul>
+
+  <p>If you only fix the first, you get a clean queue and a client who still escalates around you, because they have learned that the formal channel does not produce outcomes.</p>
+
+  <h2>Triage before throughput</h2>
+
+  <p>The first pass is not about resolving anything. It is about establishing what is actually there. I read every open item and sort it into four buckets: still live, already resolved but never closed, duplicate, and no longer relevant.</p>
+
+  <p>That pass is tedious and it produces no closures anyone will celebrate. It also usually reveals that the real backlog is a fraction of the reported one, which is the single most useful thing you can tell a client in week one. A queue of <span class="fill">[00]</span> that turns out to be <span class="fill">[00]</span> live items is a different conversation from a queue of <span class="fill">[00]</span>.</p>
+
+  <h2>Severity gates, agreed in advance</h2>
+
+  <p>Most neglected queues have no working definition of severity, or have one that nobody applies. Everything arrives as urgent, so nothing is.</p>
+
+  <p>What works is a small number of levels with a written definition and a stated response commitment for each, agreed with the client before you start applying it. Three or four levels is plenty. The important part is not the sophistication of the model, it is that both sides agreed to it while nothing was on fire, so that when something is on fire you are applying a rule rather than negotiating.</p>
+
+  <blockquote>A severity model written during an incident is a negotiation. Written before one, it is a decision.</blockquote>
+
+  <h2>One owner per open item</h2>
+
+  <p>Shared ownership of a queue means no ownership of any item in it. Every live item gets a named person, visible to the client. Not a team, a person.</p>
+
+  <p>This sounds administrative and it is the change that moves the numbers most. It also has a side effect worth knowing about: once ownership is visible, items that nobody is willing to own become obvious, and those are almost always the ones that should have been closed or escalated weeks ago.</p>
+
+  <h2>The weekly review, with a fixed agenda</h2>
+
+  <p>A recurring call with a variable agenda becomes a status recital that both sides start skipping. A fixed agenda makes it useful and, more importantly, makes its absence conspicuous.</p>
+
+  <p>Mine runs to four items: what closed since last week, what is live and who owns it, what is blocked and on whom, and what is coming that the client should know about. Fifteen minutes if things are calm. The blocked section is the one that earns the meeting, because it is where a client can actually unblock you and often does not realise it.</p>
+
+  <h2>Rebuilding the report</h2>
+
+  <p>The status update is the product here, not the queue. A report that says &ldquo;good progress this week&rdquo; teaches a client to stop reading. One that says what closed, what did not, and why, teaches them that a quiet week is information rather than a gap.</p>
+
+  <p>I write them so that someone can act on them without a call. That is the test I apply before sending: is there anything in here that requires a conversation to interpret? If so, it is not finished.</p>
+
+  <h2>What I would do differently</h2>
+
+  <p>I spent the first fortnight measuring and sorting, and I would spend it again. What I would change is telling the client that was the plan on day one rather than day nine. From their side, two weeks of triage with no closures looks exactly like two more weeks of nothing happening, which is the thing they had already lost patience with. The work was right. The framing was late, and rebuilding that trust cost more than the triage did.</p>
+
+  <div class="note">
+    <span class="lbl">FILL THESE IN</span>
+    <p>The bracketed figures are yours to complete. Real numbers make this piece considerably stronger, and the triage pass is exactly the moment you have them.</p>
+  </div>
+
+
+  <div class="end">
+    <p class="who">I am Abhishek KC. I manage delivery on client software projects from Kathmandu, working with teams in Australia and the US.</p>
+    <a class="btn" href="../index.html">
+      More about my work
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What five years in support queues taught me about scoping — Abhishek KC</title>
+<meta name="description" content="The requirements nobody writes down are the ones support inherits. Five questions I now ask during scoping, all of them learned from answering tickets.">
+<meta name="theme-color" content="#070C18">
+<meta property="og:title" content="What five years in support queues taught me about scoping">
+<meta property="og:description" content="The requirements nobody writes down are the ones support inherits. Five questions I now ask during scoping, all of them learned from answering tickets.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://abhishek11-sync.github.io/my-portfolio/writing/support-queues-taught-me-about-scoping.html">
+<meta property="og:image" content="https://abhishek11-sync.github.io/my-portfolio/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070C18'/%3E%3Ctext x='16' y='22' font-family='Helvetica,Arial' font-size='15' font-weight='700' fill='%23E3A857' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "What five years in support queues taught me about scoping",
+  "description": "The requirements nobody writes down are the ones support inherits. Five questions I now ask during scoping, all of them learned from answering tickets.",
+  "datePublished": "2026-03-16",
+  "author": { "@type": "Person", "name": "Abhishek KC", "url": "https://abhishek11-sync.github.io/my-portfolio/" },
+  "publisher": { "@type": "Person", "name": "Abhishek KC" },
+  "mainEntityOfPage": "https://abhishek11-sync.github.io/my-portfolio/writing/support-queues-taught-me-about-scoping.html"
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{
+  --bg:#070C18;--raise:#111A2C;--raise2:#141E32;
+  --ink:#E3EAF4;--ink2:#A4B2C6;--muted:#6B7A91;
+  --rule:#1C2739;--rule2:#15202F;
+  --brass:#E3A857;--brass-dim:#7F5F2E;--brass-wash:rgba(227,168,87,.10);
+  --blue:#7FA9DC;--on-accent:#070C18;--grain:.05;--scheme:dark;
+  --sans:"Schibsted Grotesk",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#F1F4FA;--raise:#FFFFFF;--raise2:#EFF3F9;
+    --ink:#111827;--ink2:#46536B;--muted:#78859B;
+    --rule:#DCE3EE;--rule2:#E9EEF5;
+    --brass:#8A5A0E;--brass-dim:#C9A05A;--brass-wash:rgba(227,168,87,.18);
+    --blue:#25578C;--on-accent:#2A1B03;--grain:.022;--scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F1F4FA;--raise:#FFFFFF;--raise2:#EFF3F9;
+  --ink:#111827;--ink2:#46536B;--muted:#78859B;
+  --rule:#DCE3EE;--rule2:#E9EEF5;
+  --brass:#8A5A0E;--brass-dim:#C9A05A;--brass-wash:rgba(227,168,87,.18);
+  --blue:#25578C;--on-accent:#2A1B03;--grain:.022;--scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;color-scheme:var(--scheme)}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--brass-wash);color:var(--ink)}
+a{color:var(--blue);text-decoration:none}
+a:hover{color:var(--ink)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:3px}
+.grain{
+  position:fixed;inset:0;z-index:80;pointer-events:none;opacity:var(--grain);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:99;background:var(--brass);transform:scaleX(0);transform-origin:0 50%}
+@supports (animation-timeline:scroll()){.progress{animation:grow linear;animation-timeline:scroll(root)}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+.bar{
+  position:sticky;top:0;z-index:94;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:14px 32px;background:var(--bg);border-bottom:1px solid var(--rule);
+}
+.bar a.home{
+  font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink);
+  display:inline-flex;align-items:center;gap:9px;
+}
+.bar a.home:hover{color:var(--brass)}
+.bar .right{display:flex;align-items:center;gap:18px;font-size:13.5px;color:var(--muted)}
+
+.wrap{max-width:760px;margin:0 auto;padding:64px 32px 96px;position:relative;z-index:1}
+.kicker{
+  font-family:var(--serif);font-style:italic;font-size:18px;color:var(--brass);
+  margin:0 0 12px;
+}
+h1{
+  font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.14;
+  letter-spacing:-.014em;margin:0 0 18px;text-wrap:balance;
+}
+.meta{
+  display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;
+  font-size:13px;color:var(--muted);
+  padding-bottom:30px;border-bottom:1px solid var(--rule);margin-bottom:34px;
+}
+.meta .dot{width:4px;height:4px;border-radius:50%;background:var(--rule)}
+.standfirst{font-size:20px;line-height:1.6;color:var(--ink2);margin:0 0 30px;text-wrap:pretty}
+h2{
+  font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.22;
+  letter-spacing:-.008em;margin:44px 0 14px;text-wrap:balance;
+}
+p{margin:0 0 20px;color:var(--ink2);text-wrap:pretty}
+strong{color:var(--ink);font-weight:600}
+em{font-style:italic}
+ul,ol{margin:0 0 22px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+li{position:relative;padding-left:30px;color:var(--ink2)}
+li::before{content:"";position:absolute;left:0;top:13px;width:9px;height:1px;background:var(--brass-dim)}
+ol{counter-reset:n}
+ol li{counter-increment:n}
+ol li::before{
+  content:counter(n);top:0;width:auto;height:auto;background:none;
+  font-size:13px;font-weight:600;color:var(--brass);
+}
+blockquote{
+  font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.5;
+  color:var(--ink);border-left:2px solid var(--brass-dim);
+  padding:4px 0 4px 22px;margin:30px 0;
+}
+.note{
+  border:1px solid var(--rule);border-radius:12px;background:var(--raise);
+  padding:22px 24px;margin:30px 0;font-size:16px;
+}
+.note p:last-child{margin-bottom:0}
+.note .lbl{
+  font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--brass);
+  display:block;margin-bottom:10px;
+}
+.fill{color:var(--brass);font-weight:600}
+.end{
+  margin-top:56px;padding-top:28px;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;
+}
+.end .who{font-size:15px;color:var(--ink2);max-width:46ch}
+.btn{
+  font-family:var(--sans);display:inline-flex;align-items:center;gap:8px;
+  padding:11px 17px;border-radius:9px;font-size:14px;font-weight:600;
+  border:1px solid var(--brass);color:var(--brass);background:var(--brass-wash);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055);white-space:nowrap;
+}
+.btn:hover{background:var(--brass);color:var(--on-accent)}
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .wrap{padding:40px 22px 72px}
+  .bar{padding:12px 22px}
+  h1{font-size:32px}
+  h2{font-size:22px}
+  .standfirst{font-size:18px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.progress{display:none}}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .grain,.progress,.bar,.end{display:none!important}
+  .wrap{max-width:none;padding:0}
+  h1,h2,strong{color:#000}
+  p,li,.standfirst{color:#222}
+  @page{margin:16mm}
+}
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="bar">
+  <a class="home" href="../index.html">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Abhishek KC
+  </a>
+  <div class="right"><span>Notes from delivery</span></div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Notes from delivery</p>
+  <h1>What five years in support queues taught me about scoping</h1>
+  <div class="meta">
+    <span>March 2026</span><span class="dot"></span>
+    <span>3 min read</span><span class="dot"></span>
+    <span>Scoping</span>
+  </div>
+  <p class="standfirst">The requirements nobody writes down are the ones support inherits. Here are five questions I now ask during scoping, all of which I learned the hard way on the other side of the handover.</p>
+
+
+  <p>I did not come into project management from business analysis. I came from support, and I spent about five years there before I ever wrote a scope document. For a long time I thought of that as the part of my history I would eventually grow out of.</p>
+
+  <p>It turned out to be the most useful thing I brought with me. Not because support taught me technical detail, though it did, but because support is where you find out what a scope document left out. Every gap between what was agreed and what the customer actually needed lands in a queue eventually, and somebody has to answer for it in writing.</p>
+
+  <h2>The gap nobody plans for</h2>
+
+  <p>A scope document describes what will be built. What it rarely describes is what happens when the thing built behaves in a way nobody anticipated. Those are two different documents, and only one of them usually gets written.</p>
+
+  <p>So the pattern repeats. A project ships, everybody signs off, and three weeks later support starts seeing a class of problem that was never in scope because nobody thought to ask about it. It is not anyone&rsquo;s fault exactly. The people writing the scope are thinking about the happy path, because that is what they are being asked to price.</p>
+
+  <blockquote>Scoping asks what should happen. Support asks what happens when it does not.</blockquote>
+
+  <h2>Five questions I now ask</h2>
+
+  <p>These all come from tickets. Each one is a question I wish somebody had asked before a build I later had to defend.</p>
+
+  <ol>
+    <li><strong>What does the user see when this fails?</strong> Not what the log records, what the person on the screen sees. If the answer is &ldquo;nothing&rdquo; or &ldquo;we have not decided&rdquo;, that is a scope item, and it is usually a cheap one to add at this stage and expensive to retrofit.</li>
+    <li><strong>Who is the first person to hear about it?</strong> If a feature breaks quietly, the first report comes from a customer to support, not from monitoring to engineering. Knowing that changes what you instrument and who you train.</li>
+    <li><strong>What does this depend on that we do not control?</strong> Third-party services, a client-side integration, someone else&rsquo;s API rate limit. Every external dependency is a future incident with a date not yet assigned.</li>
+    <li><strong>What is the manual fallback?</strong> When the automated path is unavailable, is there a way for a human to complete the task? Sometimes the answer is legitimately no. But it should be a decision, not an omission.</li>
+    <li><strong>Who will own this in six months?</strong> A build with no named owner after handover becomes everybody&rsquo;s problem, which in practice means nobody&rsquo;s. Naming the owner during scoping is free. Finding one later is not.</li>
+  </ol>
+
+  <h2>This makes scoping slower</h2>
+
+  <p>I want to be honest about the cost. Asking these questions adds time to a phase that clients already experience as a delay before anything visible happens. It also occasionally surfaces something uncomfortable, like a dependency the client did not realise they were exposed to.</p>
+
+  <p>I still ask them, because the alternative is discovering the same information in a queue six months later, with a customer waiting and less room to move. A scope that takes two extra days and holds is cheaper than one that is agreed quickly and renegotiated.</p>
+
+  <p>The one adjustment I have made is to be explicit about why I am asking. If a client hears a list of failure questions with no framing, it can sound like pessimism about the project. Framed as &ldquo;here is what we will not be surprised by&rdquo;, the same questions read as care.</p>
+
+  <h2>What support actually gives you</h2>
+
+  <p>People sometimes describe a support background as an unusual route into delivery, and it is. But the specific advantage is narrow and worth naming precisely: <strong>support teaches you the difference between a system working and a system being usable.</strong></p>
+
+  <p>Those come apart more often than you would expect. A build can meet every acceptance criterion and still generate a steady trickle of contacts, because the criteria described the mechanism and not the experience. Once you have spent years answering that trickle, you scope differently. Not more cautiously, just with a clearer picture of where the cost lands after everyone has moved on to the next thing.</p>
+
+  <div class="note">
+    <span class="lbl">A NOTE ON THIS PIECE</span>
+    <p>Written from my own experience across support and delivery roles. No client is named, and nothing here describes a specific engagement.</p>
+  </div>
+
+
+  <div class="end">
+    <p class="who">I am Abhishek KC. I manage delivery on client software projects from Kathmandu, working with teams in Australia and the US.</p>
+    <a class="btn" href="../index.html">
+      More about my work
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</main>
+</body>
+</html>

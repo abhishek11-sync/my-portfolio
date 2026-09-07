@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abhishek11-sync.github.io/my-portfolio/sitemap.xml

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shipping NetSuite changes to a client who cannot take downtime — Abhishek KC</title>
+<meta name="description" content="A release path built around a tested rollback rather than a good night. Instrument first, make it additive, stage the rollout, and hand support the runbook before the flag moves.">
+<meta name="theme-color" content="#070C18">
+<meta property="og:title" content="Shipping NetSuite changes to a client who cannot take downtime">
+<meta property="og:description" content="A release path built around a tested rollback rather than a good night. Instrument first, make it additive, stage the rollout, and hand support the runbook before the flag moves.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://abhishek11-sync.github.io/my-portfolio/writing/shipping-netsuite-changes-without-downtime.html">
+<meta property="og:image" content="https://abhishek11-sync.github.io/my-portfolio/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070C18'/%3E%3Ctext x='16' y='22' font-family='Helvetica,Arial' font-size='15' font-weight='700' fill='%23E3A857' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Shipping NetSuite changes to a client who cannot take downtime",
+  "description": "A release path built around a tested rollback rather than a good night. Instrument first, make it additive, stage the rollout, and hand support the runbook before the flag moves.",
+  "datePublished": "2026-09-07",
+  "author": { "@type": "Person", "name": "Abhishek KC", "url": "https://abhishek11-sync.github.io/my-portfolio/" },
+  "publisher": { "@type": "Person", "name": "Abhishek KC" },
+  "mainEntityOfPage": "https://abhishek11-sync.github.io/my-portfolio/writing/shipping-netsuite-changes-without-downtime.html"
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+:root{
+  --bg:#070C18;--raise:#111A2C;--raise2:#141E32;
+  --ink:#E3EAF4;--ink2:#A4B2C6;--muted:#6B7A91;
+  --rule:#1C2739;--rule2:#15202F;
+  --brass:#E3A857;--brass-dim:#7F5F2E;--brass-wash:rgba(227,168,87,.10);
+  --blue:#7FA9DC;--on-accent:#070C18;--grain:.05;--scheme:dark;
+  --sans:"Schibsted Grotesk",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#F1F4FA;--raise:#FFFFFF;--raise2:#EFF3F9;
+    --ink:#111827;--ink2:#46536B;--muted:#78859B;
+    --rule:#DCE3EE;--rule2:#E9EEF5;
+    --brass:#8A5A0E;--brass-dim:#C9A05A;--brass-wash:rgba(227,168,87,.18);
+    --blue:#25578C;--on-accent:#2A1B03;--grain:.022;--scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#F1F4FA;--raise:#FFFFFF;--raise2:#EFF3F9;
+  --ink:#111827;--ink2:#46536B;--muted:#78859B;
+  --rule:#DCE3EE;--rule2:#E9EEF5;
+  --brass:#8A5A0E;--brass-dim:#C9A05A;--brass-wash:rgba(227,168,87,.18);
+  --blue:#25578C;--on-accent:#2A1B03;--grain:.022;--scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;color-scheme:var(--scheme)}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--brass-wash);color:var(--ink)}
+a{color:var(--blue);text-decoration:none}
+a:hover{color:var(--ink)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:3px}
+.grain{
+  position:fixed;inset:0;z-index:80;pointer-events:none;opacity:var(--grain);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:99;background:var(--brass);transform:scaleX(0);transform-origin:0 50%}
+@supports (animation-timeline:scroll()){.progress{animation:grow linear;animation-timeline:scroll(root)}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+.bar{
+  position:sticky;top:0;z-index:94;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:14px 32px;background:var(--bg);border-bottom:1px solid var(--rule);
+}
+.bar a.home{
+  font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink);
+  display:inline-flex;align-items:center;gap:9px;
+}
+.bar a.home:hover{color:var(--brass)}
+.bar .right{display:flex;align-items:center;gap:18px;font-size:13.5px;color:var(--muted)}
+
+.wrap{max-width:760px;margin:0 auto;padding:64px 32px 96px;position:relative;z-index:1}
+.kicker{
+  font-family:var(--serif);font-style:italic;font-size:18px;color:var(--brass);
+  margin:0 0 12px;
+}
+h1{
+  font-family:var(--serif);font-weight:600;font-size:42px;line-height:1.14;
+  letter-spacing:-.014em;margin:0 0 18px;text-wrap:balance;
+}
+.meta{
+  display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;
+  font-size:13px;color:var(--muted);
+  padding-bottom:30px;border-bottom:1px solid var(--rule);margin-bottom:34px;
+}
+.meta .dot{width:4px;height:4px;border-radius:50%;background:var(--rule)}
+.standfirst{font-size:20px;line-height:1.6;color:var(--ink2);margin:0 0 30px;text-wrap:pretty}
+h2{
+  font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.22;
+  letter-spacing:-.008em;margin:44px 0 14px;text-wrap:balance;
+}
+p{margin:0 0 20px;color:var(--ink2);text-wrap:pretty}
+strong{color:var(--ink);font-weight:600}
+em{font-style:italic}
+ul,ol{margin:0 0 22px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+li{position:relative;padding-left:30px;color:var(--ink2)}
+li::before{content:"";position:absolute;left:0;top:13px;width:9px;height:1px;background:var(--brass-dim)}
+ol{counter-reset:n}
+ol li{counter-increment:n}
+ol li::before{
+  content:counter(n);top:0;width:auto;height:auto;background:none;
+  font-size:13px;font-weight:600;color:var(--brass);
+}
+blockquote{
+  font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.5;
+  color:var(--ink);border-left:2px solid var(--brass-dim);
+  padding:4px 0 4px 22px;margin:30px 0;
+}
+.note{
+  border:1px solid var(--rule);border-radius:12px;background:var(--raise);
+  padding:22px 24px;margin:30px 0;font-size:16px;
+}
+.note p:last-child{margin-bottom:0}
+.note .lbl{
+  font-size:11px;font-weight:600;letter-spacing:.14em;color:var(--brass);
+  display:block;margin-bottom:10px;
+}
+.fill{color:var(--brass);font-weight:600}
+.end{
+  margin-top:56px;padding-top:28px;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;
+}
+.end .who{font-size:15px;color:var(--ink2);max-width:46ch}
+.btn{
+  font-family:var(--sans);display:inline-flex;align-items:center;gap:8px;
+  padding:11px 17px;border-radius:9px;font-size:14px;font-weight:600;
+  border:1px solid var(--brass);color:var(--brass);background:var(--brass-wash);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055);white-space:nowrap;
+}
+.btn:hover{background:var(--brass);color:var(--on-accent)}
+@media (max-width:640px){
+  body{font-size:16.5px}
+  .wrap{padding:40px 22px 72px}
+  .bar{padding:12px 22px}
+  h1{font-size:32px}
+  h2{font-size:22px}
+  .standfirst{font-size:18px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.progress{display:none}}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .grain,.progress,.bar,.end{display:none!important}
+  .wrap{max-width:none;padding:0}
+  h1,h2,strong{color:#000}
+  p,li,.standfirst{color:#222}
+  @page{margin:16mm}
+}
+</style>
+</head>
+<body>
+<div class="progress" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="bar">
+  <a class="home" href="../index.html">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Abhishek KC
+  </a>
+  <div class="right"><span>Notes from delivery</span></div>
+</header>
+
+<main class="wrap">
+  <p class="kicker">Notes from delivery</p>
+  <h1>Shipping NetSuite changes to a client who cannot take downtime</h1>
+  <div class="meta">
+    <span>September 2026</span><span class="dot"></span>
+    <span>4 min read</span><span class="dot"></span>
+    <span>Release management</span>
+  </div>
+  <p class="standfirst">Every client says they cannot take downtime. Some of them mean it. Here is the release path I use when the maintenance window you are offered is zero minutes.</p>
+
+
+  <p>The first thing to establish is whether &ldquo;no downtime&rdquo; is a preference or a constraint. Most of the time it is a preference, and a Sunday morning window is available if you ask properly. Occasionally it is real: trade customers placing large orders across several time zones, no hour of the week that is genuinely quiet.</p>
+
+  <p>When it is real, the shape of the work changes. You are no longer planning a release, you are planning a sequence of reversible steps, and the plan is built backwards from the rollback rather than forwards from the build.</p>
+
+  <h2>Instrument before you change anything</h2>
+
+  <p>This is the step most often skipped and the one I would defend hardest. Before touching the behaviour, add logging to the path you are about to change, and let it run.</p>
+
+  <p>Two weeks of real data does three things. It confirms the problem is what everyone believes it is, which is not always the case. It gives you a baseline to compare against afterwards, so &ldquo;it is better&rdquo; becomes a number. And it produces a list of real inputs that failed, which you will need for testing.</p>
+
+  <blockquote>You cannot claim an improvement without a before. Instrumenting first is how you earn the right to the after.</blockquote>
+
+  <p>The cost is that from the client&rsquo;s side, two weeks of measurement looks like two weeks of nothing. Say so on day one, in writing, with what you expect to learn. That framing is the difference between patience and a difficult call in week two.</p>
+
+  <h2>Make it additive, not a replacement</h2>
+
+  <p>The temptation with a component that is misbehaving is to replace it. Replacement means the whole path is new, which means the whole path needs regression testing, which means the window you did not have just got bigger.</p>
+
+  <p>Additive is almost always better under this constraint. Leave the existing path in place as the primary. Add the new behaviour as a second attempt that only triggers on a defined failure. The happy path is untouched, so the surface area you have to prove is small, and if the new path misbehaves you are back to the previous behaviour rather than to a broken checkout.</p>
+
+  <p>It is less elegant. An additive fix leaves you carrying two implementations and a decision about when to consolidate. I take that trade every time when the alternative is a release nobody can safely reverse.</p>
+
+  <h2>Stage the rollout</h2>
+
+  <p>Behind a flag, in this order:</p>
+
+  <ol>
+    <li><strong>Internal accounts only.</strong> You and the client&rsquo;s team, on real production data, doing real transactions.</li>
+    <li><strong>One narrow segment.</strong> A single region, a single customer group, whatever the smallest meaningful slice is. Long enough to see a full business cycle, which usually means days rather than hours.</li>
+    <li><strong>Everyone.</strong> Only once the segment has been quiet for long enough that quiet is evidence rather than luck.</li>
+  </ol>
+
+  <p>The flag is what makes this work. Without one, every stage is a deployment and every reversal is a deployment, and you have multiplied the number of risky moments rather than reduced them.</p>
+
+  <h2>Give support the runbook before the flag moves</h2>
+
+  <p>This is the part that gets left until afterwards, and afterwards is too late. Before the flag moves for anyone, the support team should have, in writing: what is changing, what the symptom looks like if it goes wrong, the exact steps to reverse it, and who to call.</p>
+
+  <p>If support finds out about a release from a customer complaint, you have created two incidents: the technical one and the one where the client&rsquo;s users got a worse experience from the people meant to be helping them.</p>
+
+  <h2>The rollback you have actually run</h2>
+
+  <p>A rollback plan that exists only as a paragraph in a document is a hope, not a plan. Run it. In staging at minimum, ideally as part of the internal-accounts stage, so that the steps have been executed by a person at least once when nothing was at stake.</p>
+
+  <p>Two things fall out of doing this. You find the step that does not work as written, which there almost always is. And you find out how long it actually takes, which is the number the client will ask for and the one you should not be guessing at.</p>
+
+  <h2>What this costs</h2>
+
+  <p>More elapsed time than a single well-planned release with a proper window. If a window is genuinely available, take it, and do not build this apparatus out of caution.</p>
+
+  <p>But when the window does not exist, the alternative is not a faster release. It is a release that either does not happen or happens without a way back. This path is slower and it ends with the change live, a measured before and after, a support team that was not surprised, and a reversal that has been rehearsed. On a system taking real orders, that is the trade worth making.</p>
+
+  <div class="note">
+    <span class="lbl">A NOTE ON THIS PIECE</span>
+    <p>Written from delivery experience across NetSuite and other ecommerce platforms. No client is named and nothing here describes a specific engagement.</p>
+  </div>
+
+
+  <div class="end">
+    <p class="who">I am Abhishek KC. I manage delivery on client software projects from Kathmandu, working with teams in Australia and the US.</p>
+    <a class="btn" href="../index.html">
+      More about my work
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</main>
+</body>
+</html>
