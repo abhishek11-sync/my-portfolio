@@ -372,8 +372,6 @@ h2{font-size:35px;margin-bottom:20px;text-wrap:balance}
 .band h2{max-width:26ch}
 .band .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 
-footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 26px}
-
 /* ---------- responsive ---------- */
 @media (max-width:1060px){
   .shell{flex-direction:column}
@@ -450,25 +448,20 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
   cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.42);
 }
 .talk-launch:hover{background:#EEB868}
-.talk-launch[hidden],.talk-panel[hidden],.talk-backdrop[hidden]{display:none}
-.talk-backdrop{
-  position:fixed;inset:0;z-index:94;
-  background:rgba(3,7,16,.6);backdrop-filter:blur(2px);
-  opacity:0;transition:opacity .2s ease;
-}
-.talk-backdrop.show{opacity:1}
+.talk-launch[hidden],.talk-panel[hidden]{display:none}
 .talk-panel{
-  position:fixed;top:50%;left:50%;z-index:95;
+  position:fixed;right:26px;bottom:90px;z-index:95;
   width:352px;max-width:calc(100vw - 32px);
-  max-height:calc(100vh - 64px);
-  transform:translate(-50%,-50%) scale(.96);opacity:0;
-  transition:transform .2s ease, opacity .2s ease;
+  max-height:calc(100vh - 116px);
+  transform-origin:bottom right;
+  transform:scale(.94);opacity:0;
+  transition:transform .16s ease, opacity .16s ease;
   display:flex;flex-direction:column;
   background:var(--raise);border:1px solid var(--rule);border-radius:16px;
   box-shadow:0 24px 60px rgba(0,0,0,.55), var(--lift);
   overflow:hidden;
 }
-.talk-panel.show{transform:translate(-50%,-50%) scale(1);opacity:1}
+.talk-panel.show{transform:scale(1);opacity:1}
 .talk-head{flex:0 0 auto;display:flex;align-items:center;gap:11px;padding:16px 16px 14px;border-bottom:1px solid var(--rule2)}
 .talk-head .who{flex:1 1 auto;min-width:0}
 .talk-head .n{font-family:var(--serif);font-size:15.5px;font-weight:600;color:var(--ink)}
@@ -518,7 +511,7 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
 .talk-foot{font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.5}
 @media (max-width:560px){
   .talk-launch{right:14px;bottom:14px}
-  .talk-panel{width:calc(100vw - 28px);max-height:calc(100vh - 28px)}
+  .talk-panel{right:14px;bottom:76px;width:calc(100vw - 28px);max-height:calc(100vh - 102px)}
   .sends{grid-template-columns:1fr}
 }
 
@@ -527,7 +520,7 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
   body{background:#fff;color:#000;font-size:10.5pt;line-height:1.45}
   .grain,.skip,.nav,.actions,.status,.worldclock,.wc-note,.quote,.band .row,.ico,.panel::after,
   .progress,.theme,.now-head .pulse,.job::before,.mobar,.city .day,
-  .talk-launch,.talk-panel,.talk-backdrop{display:none!important}
+  .talk-launch,.talk-panel{display:none!important}
   .shell{display:block}
   .panel{position:static;width:auto;height:auto;padding:0 0 14pt;background:none;border:0;overflow:visible;gap:0;display:block}
   .name{font-size:20pt;margin:0}
@@ -556,7 +549,6 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
   .groups{gap:10pt 24pt}
   .post{padding:5pt 0;break-inside:avoid}
   .band{background:none;padding-top:12pt}
-  footer{margin-top:14pt;font-size:8.5pt;color:#555}
   a{color:#000}
   @page{margin:14mm}
 }
@@ -981,22 +973,12 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
       <div class="band">
         <p class="eyebrow">Contact</p>
         <h2>Tell me what you are working on</h2>
-        <p class="lede">I like hearing what people are building, and I am happy to talk whether or not there is a role or a project at the end of it. Email is the fastest way to reach me, and I answer within a business day, whatever time zone you are in.</p>
+        <p class="lede">I like hearing what people are building, and I am happy to talk whether or not there is a role or a project at the end of it. Use the button in the corner to reach me on WhatsApp or email, and I answer within a business day, whatever time zone you are in.</p>
         <div class="row">
-          <a class="btn" href="mailto:hiitsmeabhishek11@gmail.com">
-            hiitsmeabhishek11@gmail.com
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
           <button class="btn ghost" id="copyMail" type="button" hidden>Copy address</button>
           <a class="btn ghost" href="https://www.linkedin.com/in/abhishek-kc4554/">LinkedIn</a>
         </div>
       </div>
-
-      <footer>
-        <span>Abhishek KC</span>
-        <span>Kathmandu, Nepal</span>
-        <span>Last updated September 2026</span>
-      </footer>
     </section>
 
   </main>
@@ -1008,8 +990,7 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
   Let's talk
 </button>
 
-<div class="talk-backdrop" id="talkBackdrop" hidden></div>
-<div class="talk-panel" id="talkPanel" role="dialog" aria-label="Start a conversation" aria-modal="true" hidden>
+<div class="talk-panel" id="talkPanel" role="dialog" aria-label="Start a conversation" aria-modal="false" hidden>
   <div class="talk-head">
     <div class="talk-face">AK</div>
     <div class="who">
@@ -1064,7 +1045,6 @@ var EMAIL    = "hiitsmeabhishek11@gmail.com";
 (function () {
   var open = document.getElementById('talkOpen');
   var panel = document.getElementById('talkPanel');
-  var backdrop = document.getElementById('talkBackdrop');
   var close = document.getElementById('talkClose');
   var picks = document.getElementById('picks');
   var msg = document.getElementById('talkMsg');
@@ -1074,31 +1054,26 @@ var EMAIL    = "hiitsmeabhishek11@gmail.com";
   function show(on) {
     clearTimeout(hideTimer);
     if (on) {
-      backdrop.hidden = false;
       panel.hidden = false;
       requestAnimationFrame(function () {
-        backdrop.classList.add('show');
         panel.classList.add('show');
       });
       open.hidden = true;
       open.setAttribute('aria-expanded', 'true');
       msg.focus({ preventScroll: true });
     } else {
-      backdrop.classList.remove('show');
       panel.classList.remove('show');
       open.hidden = false;
       open.setAttribute('aria-expanded', 'false');
       open.focus({ preventScroll: true });
       hideTimer = setTimeout(function () {
-        backdrop.hidden = true;
         panel.hidden = true;
-      }, 200);
+      }, 160);
     }
   }
 
   open.addEventListener('click', function () { show(true); });
   close.addEventListener('click', function () { show(false); });
-  backdrop.addEventListener('click', function () { show(false); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !panel.hidden) show(false);
   });
