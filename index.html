@@ -450,15 +450,25 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
   cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.42);
 }
 .talk-launch:hover{background:#EEB868}
+.talk-launch[hidden],.talk-panel[hidden],.talk-backdrop[hidden]{display:none}
+.talk-backdrop{
+  position:fixed;inset:0;z-index:94;
+  background:rgba(3,7,16,.6);backdrop-filter:blur(2px);
+  opacity:0;transition:opacity .2s ease;
+}
+.talk-backdrop.show{opacity:1}
 .talk-panel{
-  position:fixed;right:26px;bottom:26px;z-index:95;
+  position:fixed;top:50%;left:50%;z-index:95;
   width:352px;max-width:calc(100vw - 32px);
-  max-height:calc(100vh - 52px);
+  max-height:calc(100vh - 64px);
+  transform:translate(-50%,-50%) scale(.96);opacity:0;
+  transition:transform .2s ease, opacity .2s ease;
   display:flex;flex-direction:column;
   background:var(--raise);border:1px solid var(--rule);border-radius:16px;
   box-shadow:0 24px 60px rgba(0,0,0,.55), var(--lift);
   overflow:hidden;
 }
+.talk-panel.show{transform:translate(-50%,-50%) scale(1);opacity:1}
 .talk-head{flex:0 0 auto;display:flex;align-items:center;gap:11px;padding:16px 16px 14px;border-bottom:1px solid var(--rule2)}
 .talk-head .who{flex:1 1 auto;min-width:0}
 .talk-head .n{font-family:var(--serif);font-size:15.5px;font-weight:600;color:var(--ink)}
@@ -507,7 +517,7 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
 .send.alt:hover{border-color:var(--brass-dim);color:var(--ink);background:transparent}
 .talk-foot{font-size:11.5px;color:var(--muted);margin-top:12px;line-height:1.5}
 @media (max-width:560px){
-  .talk-launch,.talk-panel{right:14px;bottom:14px}
+  .talk-launch{right:14px;bottom:14px}
   .talk-panel{width:calc(100vw - 28px);max-height:calc(100vh - 28px)}
   .sends{grid-template-columns:1fr}
 }
@@ -517,7 +527,7 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
   body{background:#fff;color:#000;font-size:10.5pt;line-height:1.45}
   .grain,.skip,.nav,.actions,.status,.worldclock,.wc-note,.quote,.band .row,.ico,.panel::after,
   .progress,.theme,.now-head .pulse,.job::before,.mobar,.city .day,
-  .talk-launch,.talk-panel{display:none!important}
+  .talk-launch,.talk-panel,.talk-backdrop{display:none!important}
   .shell{display:block}
   .panel{position:static;width:auto;height:auto;padding:0 0 14pt;background:none;border:0;overflow:visible;gap:0;display:block}
   .name{font-size:20pt;margin:0}
@@ -634,7 +644,7 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
       <div class="city" data-tz="Europe/London"><div class="head"><span class="live"></span><span class="place">LONDON</span></div><span class="time">--:--</span><span class="day"></span></div>
       <div class="city" data-tz="America/New_York"><div class="head"><span class="live"></span><span class="place">NEW YORK</span></div><span class="time">--:--</span><span class="day"></span></div>
     </div>
-    <p class="wc-note">I have worked with teams in Australia and the US, remote and on site, so coordinating across time zones is routine rather than an exception. Gold is me. Green means working hours there, amber the edges of the day.</p>
+    <p class="wc-note">I have worked with teams in Australia and the US, remote and on site, so coordinating across time zones is routine rather than an exception.</p>
 
     <section id="about">
       <p class="eyebrow">Hello</p>
@@ -998,7 +1008,8 @@ footer{margin-top:62px;padding-top:20px;border-top:1px solid var(--rule);font-si
   Let's talk
 </button>
 
-<div class="talk-panel" id="talkPanel" role="dialog" aria-label="Start a conversation" aria-modal="false" hidden>
+<div class="talk-backdrop" id="talkBackdrop" hidden></div>
+<div class="talk-panel" id="talkPanel" role="dialog" aria-label="Start a conversation" aria-modal="true" hidden>
   <div class="talk-head">
     <div class="talk-face">AK</div>
     <div class="who">
@@ -1053,20 +1064,41 @@ var EMAIL    = "hiitsmeabhishek11@gmail.com";
 (function () {
   var open = document.getElementById('talkOpen');
   var panel = document.getElementById('talkPanel');
+  var backdrop = document.getElementById('talkBackdrop');
   var close = document.getElementById('talkClose');
   var picks = document.getElementById('picks');
   var msg = document.getElementById('talkMsg');
   var topic = '';
+  var hideTimer;
 
   function show(on) {
-    panel.hidden = !on;
-    open.hidden = on;
-    open.setAttribute('aria-expanded', on ? 'true' : 'false');
-    if (on) { msg.focus({ preventScroll: true }); } else { open.focus({ preventScroll: true }); }
+    clearTimeout(hideTimer);
+    if (on) {
+      backdrop.hidden = false;
+      panel.hidden = false;
+      requestAnimationFrame(function () {
+        backdrop.classList.add('show');
+        panel.classList.add('show');
+      });
+      open.hidden = true;
+      open.setAttribute('aria-expanded', 'true');
+      msg.focus({ preventScroll: true });
+    } else {
+      backdrop.classList.remove('show');
+      panel.classList.remove('show');
+      open.hidden = false;
+      open.setAttribute('aria-expanded', 'false');
+      open.focus({ preventScroll: true });
+      hideTimer = setTimeout(function () {
+        backdrop.hidden = true;
+        panel.hidden = true;
+      }, 200);
+    }
   }
 
   open.addEventListener('click', function () { show(true); });
   close.addEventListener('click', function () { show(false); });
+  backdrop.addEventListener('click', function () { show(false); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && !panel.hidden) show(false);
   });
