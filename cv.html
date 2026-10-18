@@ -32,6 +32,23 @@ a{color:inherit;text-decoration:none}
 .bar{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;padding:12px 16px;background:rgba(233,236,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);font-size:14px}
 .bar a,.bar button{font:inherit;font-weight:500;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;border:1px solid var(--rule);background:#fff;color:var(--ink);cursor:pointer}
 .bar .primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.pick{display:flex;flex-wrap:wrap;gap:6px;border:0;margin:0;padding:0;align-items:center}
+.pick legend{float:left;margin-right:4px;font-weight:600;color:var(--ink2);font-size:13px}
+.pick label{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:10px;border:1px solid var(--rule);background:#fff;cursor:pointer;user-select:none}
+.pick input{accent-color:var(--accent);width:15px;height:15px;margin:0}
+.pick label:has(input:checked){border-color:var(--accent);background:#FBF6EE}
+.pick label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.hint{flex-basis:100%;text-align:center;margin:0;font-size:12.5px;color:var(--muted)}
+/* section switches */
+.no-profile .summary,.no-skills .skills-sec,.no-writing .writing{display:none}
+.one{display:none}
+.short .older .role,.short .older .co-head{display:none}
+.short .older .one{display:flex}
+.short .older{margin-top:3pt}
+.one{justify-content:space-between;gap:4pt 16pt;flex-wrap:wrap;align-items:baseline}
+.one p{margin:0}
+.one .r{font-weight:600}
+.one .c{color:var(--ink2)}
 .bar a:focus-visible,.bar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 .sheet{width:210mm;min-height:297mm;margin:24px auto 48px;background:#fff;padding:15mm 16mm 14mm;box-shadow:0 20px 60px -30px rgba(15,23,42,.35)}
@@ -90,10 +107,18 @@ h2{font-family:var(--body);font-size:8pt;font-weight:600;letter-spacing:.16em;te
 </head>
 <body>
 
-<div class="bar">
+<div class="bar" role="region" aria-label="Choose what goes in the CV">
   <a href="./">← Back to site</a>
-  <a class="primary" href="cv.pdf" download="Abhishek-KC-CV.pdf">Download PDF</a>
-  <button type="button" onclick="window.print()">Print</button>
+  <fieldset class="pick">
+    <legend>Include</legend>
+    <label><input type="checkbox" id="opt-profile" data-sec="profile" checked> Profile</label>
+    <label><input type="checkbox" id="opt-older" data-sec="older" checked> Older roles in full</label>
+    <label><input type="checkbox" id="opt-skills" data-sec="skills" checked> Skills and tools</label>
+    <label><input type="checkbox" id="opt-writing" data-sec="writing"> Selected writing</label>
+  </fieldset>
+  <button class="primary" type="button" id="savePdf">Save as PDF</button>
+  <a href="cv.pdf" download="Abhishek-KC-CV.pdf" title="Profile, all roles and skills, without writing">Standard PDF</a>
+  <p class="hint">In the print window, choose <b>Save as PDF</b> as the destination.</p>
 </div>
 
 <main class="sheet">
@@ -148,7 +173,7 @@ h2{font-family:var(--body);font-size:8pt;font-weight:600;letter-spacing:.16em;te
       </div>
     </div>
 
-    <div class="co single">
+    <div class="co single older">
       <div class="co-head"><p class="co-name">CloudFactory</p><span class="co-note">May 2024 to Apr 2025 · 1 yr</span></div>
       <div class="role">
         <div class="role-head"><p class="role-name">Project Support &amp; Data Operations</p></div>
@@ -160,7 +185,7 @@ h2{font-family:var(--body);font-size:8pt;font-weight:600;letter-spacing:.16em;te
       </div>
     </div>
 
-    <div class="co single">
+    <div class="co single older">
       <div class="co-head"><p class="co-name">Outstaffer.com</p><span class="co-note">Jan 2024 to Apr 2024 · 4 mos</span></div>
       <div class="role">
         <div class="role-head"><p class="role-name">Lead Generation Specialist</p></div>
@@ -172,7 +197,7 @@ h2{font-family:var(--body);font-size:8pt;font-weight:600;letter-spacing:.16em;te
       </div>
     </div>
 
-    <div class="co single">
+    <div class="co single older">
       <div class="co-head"><p class="co-name">Parsedom</p><span class="co-note">Nov 2023 to Apr 2024 · 6 mos</span></div>
       <div class="role">
         <div class="role-head"><p class="role-name">Customer Success Specialist</p></div>
@@ -184,7 +209,7 @@ h2{font-family:var(--body);font-size:8pt;font-weight:600;letter-spacing:.16em;te
       </div>
     </div>
 
-    <div class="co single">
+    <div class="co single older">
       <div class="co-head"><p class="co-name">PleasureBase</p><span class="co-note">Apr 2022 to Aug 2023 · 1 yr 5 mos</span></div>
       <div class="role">
         <div class="role-head"><p class="role-name">Technical Support</p></div>
@@ -196,7 +221,7 @@ h2{font-family:var(--body);font-size:8pt;font-weight:600;letter-spacing:.16em;te
       </div>
     </div>
 
-    <div class="co single">
+    <div class="co single older">
       <div class="co-head"><p class="co-name">Sprout Technology Service</p><span class="co-note">Dec 2019 to Apr 2022 · 2 yrs 5 mos</span></div>
       <div class="role">
         <div class="role-head"><p class="role-name">Cloud Worker</p></div>
@@ -209,7 +234,7 @@ h2{font-family:var(--body);font-size:8pt;font-weight:600;letter-spacing:.16em;te
     </div>
   </section>
 
-  <section>
+  <section class="skills-sec">
     <h2>Skills and tools</h2>
     <div class="skills">
       <div><h3>Delivery</h3><p>Scoping and estimation, planning and sequencing, dependency tracking, risk surfaced early, cross-functional collaboration, UAT coordination, handover and documentation</p></div>
@@ -233,5 +258,48 @@ h2{font-family:var(--body);font-size:8pt;font-weight:600;letter-spacing:.16em;te
 
   <div class="foot"><span>Abhishek KC · Project Delivery</span><span>Updated October 2026</span></div>
 </main>
+
+<script>
+/* Section picker: ticks add or remove sections, the choice is remembered
+   in this browser, and Save as PDF opens the print dialog with the file
+   already named Abhishek-KC-CV. Defaults leave out Selected writing. */
+(function () {
+  var KEY = 'cv-sections';
+  var root = document.documentElement;
+  var boxes = [].slice.call(document.querySelectorAll('.pick input'));
+
+  // one-line version of each older role, used when "Older roles in full" is off
+  [].forEach.call(document.querySelectorAll('.older'), function (co) {
+    var line = document.createElement('div');
+    line.className = 'one';
+    line.innerHTML = '<p><span class="r"></span> · <span class="c"></span></p><span class="when"></span>';
+    line.querySelector('.r').textContent = co.querySelector('.role-name').textContent;
+    line.querySelector('.c').textContent = co.querySelector('.co-name').textContent;
+    line.querySelector('.when').textContent = co.querySelector('.co-note').textContent;
+    co.appendChild(line);
+  });
+
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) {}
+  if (saved) boxes.forEach(function (b) { if (b.dataset.sec in saved) b.checked = !!saved[b.dataset.sec]; });
+
+  function apply() {
+    var state = {};
+    boxes.forEach(function (b) {
+      state[b.dataset.sec] = b.checked;
+      if (b.dataset.sec === 'older') root.classList.toggle('short', !b.checked);
+      else root.classList.toggle('no-' + b.dataset.sec, !b.checked);
+    });
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', apply); });
+  apply();
+
+  var title = document.title;
+  window.addEventListener('beforeprint', function () { document.title = 'Abhishek-KC-CV'; });
+  window.addEventListener('afterprint', function () { document.title = title; });
+  document.getElementById('savePdf').addEventListener('click', function () { window.print(); });
+})();
+</script>
 </body>
 </html>
