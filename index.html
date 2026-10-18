@@ -238,7 +238,9 @@ h1 em{font-style:italic;color:var(--brass)}
 .js .nepal img:not(.ready){opacity:0;transform:scale(1.02)}
 .nepal::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(transparent,rgba(5,9,18,.72));pointer-events:none}
 .nepal figcaption{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:6px 16px;padding:18px 22px;color:#EEF1F6}
-.nepal-place{font-family:var(--disp);font-style:italic;font-size:clamp(18px,2vw,24px)}
+.nepal-place{font-family:var(--disp);font-style:italic;font-size:clamp(18px,2vw,24px);display:grid;gap:2px}
+.nepal-note{font-family:var(--body);font-style:normal;font-size:12.5px;letter-spacing:.04em;color:rgba(238,241,246,.85)}
+.nepal-note:empty{display:none}
 .nepal-credit{font-size:12px;letter-spacing:.04em;color:rgba(238,241,246,.78);text-decoration:none}
 .nepal-credit:hover{color:#fff;text-decoration:underline}
 @media (max-width:640px){.nepal{aspect-ratio:4/3}}
@@ -551,10 +553,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
         </div>
       </div>
 
-      <!-- Nepal photo: changes every week (see PHOTOS script). Photos from Unsplash, free under the Unsplash License. -->
+      <!-- Hero photo: changes every week (see PHOTOS script). Photos from Unsplash, free under the Unsplash License. -->
       <figure class="nepal" id="nepalPhoto">
         <img src="images/nepal/kathmandu-swayambhunath-night.webp" width="1800" height="1013" alt="Swayambhunath stupa above Kathmandu at night" loading="eager" decoding="async">
-        <figcaption><span class="nepal-place">Kathmandu, Nepal</span><a class="nepal-credit" href="https://unsplash.com/photos/SstmZ25r5UA" target="_blank" rel="noopener">Photo: Jochen van Wylick / Unsplash</a></figcaption>
+        <figcaption><span class="nepal-place">Kathmandu, Nepal<small class="nepal-note">Where I am based</small></span><a class="nepal-credit" href="https://unsplash.com/photos/SstmZ25r5UA" target="_blank" rel="noopener">Photo: Jochen van Wylick / Unsplash</a></figcaption>
       </figure>
 
       <div class="hero-meta">
@@ -1248,25 +1250,32 @@ var EMAIL    = "hiitsmeabhishek11@gmail.com";
 <script>
 /* ============================================================
    PHOTOS
-   One Nepal photo in the hero, changing every ROTATE_DAYS days.
-   Everyone sees the same photo in the same week. To add a photo:
-   drop a 16:9 WebP into images/nepal/ and add a line below.
+   One photo in the hero, changing every ROTATE_DAYS days. Everyone
+   sees the same photo in the same week. The pool cycles through three
+   themes in turn (Nepal, delivery, written first) so two weeks in a
+   row never share a theme. To add one: put a 16:9 WebP in images/<theme>/
+   and add a line; keep the themes alternating.
+   Fields: file, place, note (from the site's own wording), alt text,
+   photographer, Unsplash photo id.
    ============================================================ */
 (function () {
   var ROTATE_DAYS = 7;
   var PHOTOS = [
-    ['kathmandu-swayambhunath-night', 'Kathmandu, Nepal', 'Swayambhunath stupa above Kathmandu at night', 'Jochen van Wylick', 'SstmZ25r5UA'],
-    ['himalaya-sunrise', 'The Himalaya, Nepal', 'Himalayan peaks at sunrise', 'Sylwia Bartyzel', 'FuuEdB1XN4M'],
-    ['bhaktapur-durbar-square', 'Bhaktapur, Nepal', 'Temples and people in Bhaktapur Durbar Square', 'Aaditya Shah', 'JUvPVTuZONY'],
-    ['kathmandu-temple-lit', 'Kathmandu, Nepal', 'Carved pagoda temple lit at night in Kathmandu', 'Daniele Franchi', '8vx3Gm888sM'],
-    ['namche-stupa-himalaya', 'Namche Bazaar, Nepal', 'A stupa with prayer flags in front of snow-capped peaks', 'Sebastian Pena Lambarri', 'Wj9ELwGXa6c'],
-    ['bhaktapur-nyatapola-night', 'Bhaktapur, Nepal', 'Five-tiered pagoda in Bhaktapur at dusk', 'Pritush Munankarmi', 'SE86sag8ij0'],
-    ['nepal-himalaya-over-valley', 'Nepal', 'The Himalayan range rising above the valley haze', 'Chandan Chaurasia', 'g1aIBDpbsLA'],
-    ['kathmandu-pagoda-roofs', 'Kathmandu, Nepal', 'Tiered pagoda roofs seen from below', 'Daniele Franchi', 'ijabwRYD-JU'],
-    ['namche-bazaar', 'Namche Bazaar, Nepal', 'Namche Bazaar on the mountainside', 'Kalle Kortelainen', '6F-uGWod7Xk'],
-    ['bhaktapur-rooftops-hills', 'Bhaktapur, Nepal', 'Pagoda and rooftops of Bhaktapur with hills behind', 'Raimond Klavins', 'n0RIwkDfJ1g'],
-    ['kathmandu-city-night', 'Kathmandu, Nepal', 'Kathmandu lights spread across the valley at night', 'Sujitabh Chaudhary', 'inAn2NuUs04'],
-    ['bhaktapur-temples', 'Bhaktapur, Nepal', 'Temples of Bhaktapur Durbar Square', 'Hongbin', 'H9C496Nfd7Q']
+    ['nepal/kathmandu-swayambhunath-night', 'Kathmandu, Nepal', 'Where I am based', 'Swayambhunath stupa above Kathmandu at night', 'Jochen van Wylick', 'SstmZ25r5UA'],
+    ['delivery/port-vancouver-night', '', 'Planning and sequencing', 'Container ship and cranes at a busy port at night', 'Albert Stoynov', 'oL3wEM0JEwQ'],
+    ['writing/typewriter', '', 'Written first, because the team is never all awake', 'A vintage typewriter on wooden boards', 'Patrick Fore', '0gkw_9fy0eQ'],
+    ['nepal/everest-base-camp', 'Everest Base Camp, Nepal', 'Risk gets named early, even when it is awkward', 'The Everest Base Camp marker stone below snow peaks', 'Rajan Dahal', '-I64We8WuBs'],
+    ['delivery/control-tower-sunset', '', 'The update goes out before you ask for it', 'Airport control tower against a sunset', 'Lumin Osity', 'jrR5DEslmn8'],
+    ['writing/papers-sticky-tabs', '', 'Compliance matrices and submission QA', 'A stack of documents marked with coloured tabs', 'Tanja Tepavac', '81ikZZG7_AA'],
+    ['nepal/bhaktapur-durbar-square', 'Bhaktapur, Nepal', 'Kathmandu Valley', 'Temples and people in Bhaktapur Durbar Square', 'Aaditya Shah', 'JUvPVTuZONY'],
+    ['delivery/rail-signals-dusk', '', 'Dependency tracking', 'Railway tracks curving through the countryside at dusk', 'Tsuyoshi Kozu', '_H2eRDCegIE'],
+    ['writing/library-chengdu', '', 'Decisions get written down where the next person will find them', 'Curved wooden bookshelves in a library', 'Declan Sun', 'wzaADxAu9zo'],
+    ['nepal/himalaya-sunrise', 'The Himalaya, Nepal', '', 'Himalayan peaks at sunrise', 'Sylwia Bartyzel', 'FuuEdB1XN4M'],
+    ['delivery/bridge-section-hamburg', '', 'Handover is part of delivery', 'A crane lifting a bridge section into place over the river', 'Wolfgang Weiser', 'mKqFj9O9JDY'],
+    ['writing/letterpress-type', '', 'Stakeholder updates people can act on', 'Wooden letterpress type blocks in a case', 'Declan Sun', 'JzcEdsEy1hg'],
+    ['nepal/kathmandu-temple-lit', 'Kathmandu, Nepal', 'Where I am based', 'Carved pagoda temple lit at night in Kathmandu', 'Daniele Franchi', '8vx3Gm888sM'],
+    ['delivery/container-ship-cranes', '', 'Scope narrowly and be right', 'A container ship being loaded by cranes at an industrial port', 'Timelab', 'yx20mpDyr2I'],
+    ['writing/notebook-pen', '', 'Written handover', 'An open blank notebook with a pen', 'Mike Tinnion', '3ym6i13Y9LU']
   ];
   var fig = document.getElementById('nepalPhoto');
   if (!fig) return;
@@ -1274,15 +1283,20 @@ var EMAIL    = "hiitsmeabhishek11@gmail.com";
   var period = Math.floor(Date.now() / 86400000 / ROTATE_DAYS);
   var p = PHOTOS[period % PHOTOS.length];
   function show() { img.classList.add('ready'); }
-  if (img.getAttribute('src') !== 'images/nepal/' + p[0] + '.webp') {
+  var src = 'images/' + p[0] + '.webp';
+  if (img.getAttribute('src') !== src) {
     img.classList.remove('ready');
     img.onload = show;
-    img.src = 'images/nepal/' + p[0] + '.webp';
-    img.alt = p[2];
-    fig.querySelector('.nepal-place').textContent = p[1];
+    img.src = src;
+    img.alt = p[3];
+    var place = fig.querySelector('.nepal-place');
+    // Nepal photos name the place with a short note under it; the other
+    // themes have no place line, so the note itself becomes the caption.
+    place.firstChild.nodeValue = p[1] || p[2];
+    place.querySelector('.nepal-note').textContent = p[1] ? p[2] : '';
     var c = fig.querySelector('.nepal-credit');
-    c.textContent = 'Photo: ' + p[3] + ' / Unsplash';
-    c.href = 'https://unsplash.com/photos/' + p[4];
+    c.textContent = 'Photo: ' + p[4] + ' / Unsplash';
+    c.href = 'https://unsplash.com/photos/' + p[5];
   }
   if (img.complete && img.naturalWidth) show(); else img.addEventListener('load', show);
 })();
