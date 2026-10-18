@@ -861,8 +861,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
       <p>I like hearing what people are building, and I am happy to talk whether or not there is a role or a project at the end of it. Use the button in the corner to reach me on WhatsApp or email, and I answer within a business day, whatever time zone you are in.</p>
       <div class="row">
         <a class="glow" href="mailto:hiitsmeabhishek11@gmail.com" data-talk><span class="shine"></span>Get in touch <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-        <span class="mail">hiitsmeabhishek11@gmail.com</span>
-        <button class="ghost" id="copyMail" type="button" hidden>Copy address</button>
         <a class="ghost" href="https://www.linkedin.com/in/abhishek-kc4554/">LinkedIn</a>
       </div>
     </div>
@@ -1073,23 +1071,6 @@ var EMAIL    = "hiitsmeabhishek11@gmail.com";
   window.addEventListener('afterprint', function () {
     closed.forEach(function (d) { d.open = false; });
     closed = [];
-  });
-})();
-
-/* Copy the email address, shown only where the clipboard is available. */
-(function () {
-  var btn = document.getElementById('copyMail');
-  if (!btn || !navigator.clipboard) return;
-  btn.hidden = false;
-  var label = btn.textContent;
-  btn.addEventListener('click', function () {
-    navigator.clipboard.writeText(EMAIL).then(function () {
-      btn.textContent = 'Copied';
-      setTimeout(function () { btn.textContent = label; }, 1800);
-    }).catch(function () {
-      btn.textContent = 'Press Ctrl+C';
-      setTimeout(function () { btn.textContent = label; }, 1800);
-    });
   });
 })();
 
