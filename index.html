@@ -3,14 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Abhishek KC — Project Delivery</title>
+<title>Abhishek KC · Project Delivery</title>
 <meta name="description" content="Project delivery, end to end: scoping, cross-team execution, dependency tracking and handover. Associate Project Manager at Intuji, based in Kathmandu, working with teams in Australia and the US.">
 <meta name="theme-color" content="#070C18">
-<meta property="og:title" content="Abhishek KC — Project Delivery">
+<meta property="og:title" content="Abhishek KC · Project Delivery">
 <meta property="og:description" content="I own the coordination and execution that keep client software projects moving.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://abhishek11-sync.github.io/my-portfolio/">
-<meta property="og:image" content="https://abhishek11-sync.github.io/my-portfolio/og.png">
+<meta property="og:url" content="https://abhishekkc.vercel.app/">
+<link rel="canonical" href="https://abhishekkc.vercel.app/">
+<meta property="og:image" content="https://abhishekkc.vercel.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Abhishek KC, project delivery, Kathmandu">
@@ -190,7 +191,7 @@ p{text-wrap:pretty}
 .navcard nav a:hover,.navcard nav a.on{color:var(--ink)}
 .navcard nav a:hover::after,.navcard nav a.on::after{transform:scaleX(1);transform-origin:left}
 
-.theme,.barbtn{height:36px;padding:0 12px;gap:8px;border-radius:10px;cursor:pointer;flex:0 0 auto;border:1px solid var(--rule);background:transparent;color:var(--ink2);display:inline-flex;align-items:center;justify-content:center;font-family:var(--body);font-size:13px;font-weight:500;white-space:nowrap;transition:border-color .2s,color .2s}
+.theme,.barbtn{text-decoration:none;height:36px;padding:0 12px;gap:8px;border-radius:10px;cursor:pointer;flex:0 0 auto;border:1px solid var(--rule);background:transparent;color:var(--ink2);display:inline-flex;align-items:center;justify-content:center;font-family:var(--body);font-size:13px;font-weight:500;white-space:nowrap;transition:border-color .2s,color .2s}
 .barbtn:hover{border-color:var(--brass-line);color:var(--brass)}
 @media (max-width:560px){.barbtn span,.theme-lbl{display:none}.theme,.barbtn{width:36px;padding:0}}
 .talk-launch.away{opacity:0;transform:translateY(12px);pointer-events:none}
@@ -515,10 +516,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
         <a href="#writing">Writing</a>
         <a href="#contact">Contact</a>
       </nav>
-      <button class="barbtn" id="printBtn" type="button" title="Print a one-page CV">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8V4h10v4"/><rect x="4" y="8" width="16" height="7" rx="1.5"/><path d="M7 15h10v5H7z"/></svg>
-        <span>Print CV</span>
-      </button>
+      <a class="barbtn" id="cvBtn" href="cv.pdf" download="Abhishek-KC-CV.pdf" title="Download my CV as a PDF" aria-label="Download CV (PDF)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>
+        <span>Download CV</span>
+      </a>
       <button class="theme" id="themeBtn" type="button" aria-label="Switch colour theme">
         <svg class="ic-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4"/></svg>
         <svg class="ic-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
@@ -533,7 +534,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   <!-- ============ hero ============ -->
   <section class="hero gut" aria-label="Introduction">
     <div class="wrap">
-      <svg class="dial" id="dial" viewBox="-110 -110 220 220" role="img" aria-label="24-hour dial showing the current time in Kathmandu, Perth, Tokyo, London and New York"></svg>
+      <svg class="dial" id="dial" viewBox="-110 -110 220 220" role="img" aria-label="24-hour dial showing the current time in Kathmandu, Perth, Sydney, London and New York"></svg>
       <div class="print-only print-head">
         <p class="pn">Abhishek KC</p>
         <p class="pr">Project Delivery</p>
@@ -560,7 +561,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
         <div class="now">
           <p class="caps"><span class="pulse"></span>Now</p>
           <p>Taking a client storefront through UAT and into handover, and rewriting how we scope managed services so the estimate still holds in month two.</p>
-          <span class="now-when">Updated September 2026</span>
+          <span class="now-when">Updated October 2026</span>
         </div>
         <div>
           <dl class="facts">
@@ -574,7 +575,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
           <ul class="zones" id="zones" aria-label="Current local times">
             <li class="me" data-tz="Asia/Kathmandu">Kathmandu <b>--:--</b></li>
             <li data-tz="Australia/Perth">Perth <b>--:--</b></li>
-            <li data-tz="Asia/Tokyo">Tokyo <b>--:--</b></li>
+            <li data-tz="Australia/Sydney">Sydney <b>--:--</b></li>
             <li data-tz="Europe/London">London <b>--:--</b></li>
             <li data-tz="America/New_York">New York <b>--:--</b></li>
           </ul>
@@ -614,14 +615,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   <!-- ============ experience ============ -->
   <section class="sec gut" id="experience">
     <div class="wrap">
-      <div class="sec-h caps"><p>The work so far</p><h2>Seven years customer-facing, the last of them running delivery</h2></div>
+      <div class="sec-h caps"><p>The work so far</p><h2>Nearly seven years in tech, the last of them running delivery</h2></div>
       <div class="jobs">
 
         <div class="job">
           <div>
             <h3 class="role">Associate Project Manager</h3>
             <div class="co caps">Intuji<span class="badge">Current</span></div>
-            <p class="org-span">Intuji: Mar 2025 &mdash; present &middot; 1 yr 7 mos</p>
+            <p class="org-span">At Intuji since Mar 2025 &middot; 1 yr 7 mos in total</p>
           </div>
           <div class="body">
             <p>End-to-end delivery on client web and software projects, and owner of managed services for a portfolio of Australian clients.</p>
@@ -644,7 +645,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
               <span class="chip">ClickUp</span>
             </div>
           </div>
-          <div class="when">Jul 2026 &mdash; present</div>
+          <div class="when">Jul 2026 to present</div>
           <div class="bar" aria-hidden="true"><i style="--t:14%"></i></div>
         </div>
 
@@ -663,7 +664,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
               <li>Wrote knowledge base articles and internal documentation to cut repeat enquiries.</li>
             </ul>
           </div>
-          <div class="when">Mar 2025 &mdash; Jul 2026</div>
+          <div class="when">Mar 2025 to Jul 2026</div>
           <div class="bar" aria-hidden="true"><i style="--t:55%"></i></div>
         </div>
 
@@ -684,7 +685,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
               <p class="tools">Data operations, AI annotation, quality assurance</p>
             </details>
           </div>
-          <div class="when">May 2024 &mdash; Apr 2025<span>1 yr</span></div>
+          <div class="when">May 2024 to Apr 2025<span>1 yr</span></div>
           <div class="bar" aria-hidden="true"><i style="--t:41%"></i></div>
         </div>
 
@@ -705,7 +706,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
               <p class="tools">Apollo, market research, outbound campaigns</p>
             </details>
           </div>
-          <div class="when">Jan 2024 &mdash; Apr 2024<span>4 mos</span></div>
+          <div class="when">Jan 2024 to Apr 2024<span>4 mos</span></div>
           <div class="bar" aria-hidden="true"><i style="--t:14%"></i></div>
         </div>
 
@@ -726,7 +727,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
               <p class="tools">Client engagement, requirements facilitation, remote assistance</p>
             </details>
           </div>
-          <div class="when">Nov 2023 &mdash; Apr 2024<span>6 mos</span></div>
+          <div class="when">Nov 2023 to Apr 2024<span>6 mos</span></div>
           <div class="bar" aria-hidden="true"><i style="--t:21%"></i></div>
         </div>
 
@@ -747,7 +748,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
               <p class="tools">Website evaluation, CSS debugging, UX, developer collaboration</p>
             </details>
           </div>
-          <div class="when">Apr 2022 &mdash; Aug 2023<span>1 yr 5 mos</span></div>
+          <div class="when">Apr 2022 to Aug 2023<span>1 yr 5 mos</span></div>
           <div class="bar" aria-hidden="true"><i style="--t:59%"></i></div>
         </div>
 
@@ -768,7 +769,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
               <p class="tools">AI annotation, geospatial mapping, quality assurance, project coordination</p>
             </details>
           </div>
-          <div class="when">Dec 2019 &mdash; Apr 2022<span>2 yrs 5 mos</span></div>
+          <div class="when">Dec 2019 to Apr 2022<span>2 yrs 5 mos</span></div>
           <div class="bar" aria-hidden="true"><i style="--t:100%"></i></div>
         </div>
 
@@ -874,7 +875,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
     <div class="wrap contact">
       <p class="caps" style="margin:0">Contact</p>
       <h2>Tell me what you are <em>working on</em></h2>
-      <p>I like hearing what people are building, and I am happy to talk whether or not there is a role or a project at the end of it. Use the button in the corner to reach me on WhatsApp or email, and I answer within a business day, whatever time zone you are in.</p>
+      <p>I like hearing what people are building, and I am happy to talk whether or not there is a role or a project at the end of it. Use the Let's talk button at the bottom right to reach me on WhatsApp or email, and I answer within a business day, whatever time zone you are in.</p>
       <div class="row">
         <a class="glow" href="mailto:hiitsmeabhishek11@gmail.com" data-talk><span class="shine"></span>Get in touch <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
         <a class="ghost" href="https://www.linkedin.com/in/abhishek-kc4554/">LinkedIn</a>
@@ -1097,7 +1098,7 @@ var EMAIL    = "hiitsmeabhishek11@gmail.com";
    the dial follows the light and dark themes without redrawing.
    ============================================================ */
 (function () {
-  var CITIES = [['KTM', 'Asia/Kathmandu'], ['PER', 'Australia/Perth'], ['TYO', 'Asia/Tokyo'], ['LON', 'Europe/London'], ['NYC', 'America/New_York']];
+  var CITIES = [['KTM', 'Asia/Kathmandu'], ['PER', 'Australia/Perth'], ['SYD', 'Australia/Sydney'], ['LON', 'Europe/London'], ['NYC', 'America/New_York']];
   var NS = 'http://www.w3.org/2000/svg';
   var dial = document.getElementById('dial');
   var ktm = document.getElementById('ktm');

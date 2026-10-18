@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Abhishek KC · CV</title>
+<meta name="description" content="CV of Abhishek KC, Associate Project Manager at Intuji, Kathmandu. Project delivery, managed services, NetSuite and tender responses.">
+<link rel="canonical" href="https://abhishekkc.vercel.app/cv.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23070C18'/%3E%3Ctext x='16' y='22' font-family='Helvetica,Arial' font-size='15' font-weight='700' fill='%23E3A857' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+<!-- Zodiak and Switzer are from Fontshare (Indian Type Foundry), free under the ITF Free Font License. -->
+<link rel="preload" href="fonts/zodiak-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/switzer-400.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Zodiak";src:url(fonts/zodiak-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Zodiak";src:url(fonts/zodiak-400-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Switzer";src:url(fonts/switzer-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Switzer";src:url(fonts/switzer-500.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Switzer";src:url(fonts/switzer-600.woff2) format("woff2");font-weight:600;font-display:swap}
+
+/* A4 CV. One column so applicant tracking systems read it in order. */
+:root{
+  --ink:#111827; --ink2:#3F4A5C; --muted:#6B7486; --rule:#D9DEE6; --accent:#8A6326; --desk:#E9ECF1;
+  --disp:"Zodiak",Georgia,"Times New Roman",serif;
+  --body:"Switzer",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--desk)}
+body{margin:0;color:var(--ink);font-family:var(--body);font-size:9.6pt;line-height:1.45;-webkit-font-smoothing:antialiased;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+a{color:inherit;text-decoration:none}
+
+/* screen toolbar */
+.bar{position:sticky;top:0;z-index:2;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;padding:12px 16px;background:rgba(233,236,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);font-size:14px}
+.bar a,.bar button{font:inherit;font-weight:500;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;border:1px solid var(--rule);background:#fff;color:var(--ink);cursor:pointer}
+.bar .primary{background:var(--ink);border-color:var(--ink);color:#fff}
+.bar a:focus-visible,.bar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.sheet{width:210mm;min-height:297mm;margin:24px auto 48px;background:#fff;padding:15mm 16mm 14mm;box-shadow:0 20px 60px -30px rgba(15,23,42,.35)}
+@media (max-width:840px){.sheet{width:auto;min-height:0;margin:12px;padding:22px 18px}}
+
+/* header */
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px 24px;flex-wrap:wrap;padding-bottom:9pt;border-bottom:1.5pt solid var(--ink)}
+.name{font-family:var(--disp);font-weight:400;font-size:27pt;line-height:1;letter-spacing:-.02em;margin:0}
+.title{margin:5pt 0 0;font-size:10.5pt;font-weight:500;color:var(--accent)}
+.contact{list-style:none;margin:0;padding:0;text-align:right;font-size:8.8pt;line-height:1.55;color:var(--ink2)}
+.contact b{font-weight:500;color:var(--ink)}
+@media (max-width:640px){.contact{text-align:left}}
+
+/* sections */
+section{margin-top:11pt}
+h2{font-family:var(--body);font-size:8pt;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 5pt;padding-bottom:3pt;border-bottom:.6pt solid var(--rule)}
+.summary p{margin:0 0 4pt;color:var(--ink2);max-width:none}
+.summary .em{font-family:var(--disp);font-style:italic;font-size:10.5pt;color:var(--ink)}
+
+.co{margin-top:7pt;break-inside:avoid}
+.co-head{display:flex;justify-content:space-between;align-items:baseline;gap:4pt 16pt;flex-wrap:wrap}
+.co-name{font-family:var(--disp);font-size:12.5pt;line-height:1.2;margin:0;font-weight:400}
+.co-note{font-size:8.6pt;color:var(--muted)}
+.role{margin-top:4pt;break-inside:avoid}
+.role-head{display:flex;justify-content:space-between;align-items:baseline;gap:2pt 16pt;flex-wrap:wrap}
+.role-name{font-weight:600;font-size:9.8pt;margin:0}
+.when{font-size:8.6pt;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.role ul{margin:2.5pt 0 0;padding-left:11pt}
+.role li{margin:0 0 1.2pt;color:var(--ink2)}
+.role li::marker{color:var(--accent)}
+.tags{margin:2.5pt 0 0;font-size:8.4pt;color:var(--muted)}
+.tags b{font-weight:500;color:var(--ink2)}
+.single .role{margin-top:0}
+
+.skills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6pt 18pt}
+.skills div{break-inside:avoid}
+.skills h3{font-size:8.8pt;font-weight:600;margin:0 0 1.5pt}
+.skills p{margin:0;color:var(--ink2);font-size:8.8pt}
+@media (max-width:640px){.skills{grid-template-columns:1fr}}
+
+.writing ul{list-style:none;margin:0;padding:0;display:grid;gap:2pt}
+.writing li{display:flex;justify-content:space-between;gap:16pt;color:var(--ink2)}
+.writing li span{color:var(--muted);font-size:8.6pt;white-space:nowrap}
+
+.foot{margin-top:12pt;padding-top:6pt;border-top:.6pt solid var(--rule);font-size:8pt;color:var(--muted);display:flex;justify-content:space-between;gap:12pt;flex-wrap:wrap}
+
+@page{size:A4;margin:12mm 15mm 12mm}
+@media print{
+  html,body{background:#fff}
+  .bar{display:none}
+  .sheet{width:auto;min-height:0;margin:0;padding:0;box-shadow:none}
+  body{font-kerning:none;letter-spacing:.005em}
+  h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <a href="./">← Back to site</a>
+  <a class="primary" href="cv.pdf" download="Abhishek-KC-CV.pdf">Download PDF</a>
+  <button type="button" onclick="window.print()">Print</button>
+</div>
+
+<main class="sheet">
+  <header class="head">
+    <div>
+      <h1 class="name">Abhishek KC</h1>
+      <p class="title">Associate Project Manager · Project Delivery</p>
+    </div>
+    <ul class="contact">
+      <li><b>hiitsmeabhishek11@gmail.com</b></li>
+      <li>linkedin.com/in/abhishek-kc4554</li>
+      <li>abhishekkc.vercel.app</li>
+      <li>Kathmandu, Nepal</li>
+    </ul>
+  </header>
+
+  <section class="summary">
+    <h2>Profile</h2>
+    <p>I manage client software projects end to end: scoping and planning, cross-team execution, dependency tracking, surfacing risk early, and the handover at the finish. Most of my current work is NetSuite implementations and managed services for Australian clients, plus the tenders that win the next project.</p>
+    <p>It comes from years in customer experience and technical support, owning complex production issues from intake to resolution. I have worked with teams in Australia and the US, remote and on site, so coordinating across time zones is routine rather than an exception.</p>
+    <p class="em">My strength is technical fluency and context building, not hands-on development.</p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="co">
+      <div class="co-head"><p class="co-name">Intuji</p><span class="co-note">Mar 2025 to present · 1 yr 7 mos</span></div>
+      <div class="role">
+        <div class="role-head"><p class="role-name">Associate Project Manager</p><span class="when">Jul 2026 to present</span></div>
+        <ul>
+          <li>Own end-to-end delivery for client web and software projects, from kickoff through handover.</li>
+          <li>Coordinate engineering, QA, design and account management to keep projects on schedule.</li>
+          <li>Track scope, dependencies and risk, raising issues before they reach a delivery date.</li>
+          <li>Act as the primary client contact, translating technical constraints into options they can decide on.</li>
+          <li>Own managed services for a portfolio of Australian clients: triage, severity gates, SLAs and the weekly review.</li>
+          <li>Write tender, RFI and RFT responses, including the compliance matrix and the commercial narrative.</li>
+          <li>Keep documentation, meeting notes and written follow-ups so shared context survives every handoff.</li>
+        </ul>
+      </div>
+      <div class="role">
+        <div class="role-head"><p class="role-name">Customer Support Specialist</p><span class="when">Mar 2025 to Jul 2026</span></div>
+        <ul>
+          <li>Coordinated delivery across concurrent client projects with engineering, QA and design.</li>
+          <li>Owned client communication through delivery: status updates, scope clarification, and written follow-ups after calls.</li>
+          <li>Diagnosed and resolved product issues, escalating the complex ones into Engineering, QA and Product.</li>
+          <li>Flagged delivery risks such as dependency delays and unclear scope ahead of client deadlines.</li>
+          <li>Held SLAs, quality benchmarks and escalation protocols across concurrent requests.</li>
+          <li>Wrote knowledge base articles and internal documentation to cut repeat enquiries.</li>
+        </ul>
+        <p class="tags"><b>Focus:</b> Project delivery, scope and risk, SLA management, escalations, NetSuite, Drupal, ClickUp</p>
+      </div>
+    </div>
+
+    <div class="co single">
+      <div class="co-head"><p class="co-name">CloudFactory</p><span class="co-note">May 2024 to Apr 2025 · 1 yr</span></div>
+      <div class="role">
+        <div class="role-head"><p class="role-name">Project Support &amp; Data Operations</p></div>
+        <ul>
+          <li>Transcribed receipts, bills, invoices and statements into digital formats with full data integrity.</li>
+          <li>Provided AI annotation support feeding model development and evaluation.</li>
+          <li>Met deadlines consistently in a high-volume workstream, and supported colleagues by sharing knowledge and unblocking issues.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="co single">
+      <div class="co-head"><p class="co-name">Outstaffer.com</p><span class="co-note">Jan 2024 to Apr 2024 · 4 mos</span></div>
+      <div class="role">
+        <div class="role-head"><p class="role-name">Lead Generation Specialist</p></div>
+        <ul>
+          <li>Researched the market to identify and prioritise target accounts.</li>
+          <li>Built and ran outbound email sequences, then analysed campaign performance with the team to refine them.</li>
+          <li>Worked with developers on platform functionality to improve how leads were captured and qualified.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="co single">
+      <div class="co-head"><p class="co-name">Parsedom</p><span class="co-note">Nov 2023 to Apr 2024 · 6 mos</span></div>
+      <div class="role">
+        <div class="role-head"><p class="role-name">Customer Success Specialist</p></div>
+        <ul>
+          <li>Engaged clients directly over video and audio calls, building the relationship rather than just closing the query.</li>
+          <li>Bridged communication gaps between clients and the internal team, and facilitated requirements from both sides.</li>
+          <li>Used remote assistance to resolve technical issues on customer machines.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="co single">
+      <div class="co-head"><p class="co-name">PleasureBase</p><span class="co-note">Apr 2022 to Aug 2023 · 1 yr 5 mos</span></div>
+      <div class="role">
+        <div class="role-head"><p class="role-name">Technical Support</p></div>
+        <ul>
+          <li>Evaluated storefront functionality and found issues before customers had to report them.</li>
+          <li>Monitored and fixed CSS selector problems, improving page behaviour and performance.</li>
+          <li>Worked with developers on enhancements and fed what support was seeing back into the roadmap.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="co single">
+      <div class="co-head"><p class="co-name">Sprout Technology Service</p><span class="co-note">Dec 2019 to Apr 2022 · 2 yrs 5 mos</span></div>
+      <div class="role">
+        <div class="role-head"><p class="role-name">Cloud Worker</p></div>
+        <ul>
+          <li>Transcribed bills and audio, handled data entry, and ran internet research at volume.</li>
+          <li>Provided AI image annotation and labelling, and contributed to geospatial data and mapping projects.</li>
+          <li>Coordinated work within the project team and carried out quality assurance on output.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills and tools</h2>
+    <div class="skills">
+      <div><h3>Delivery</h3><p>Scoping and estimation, planning and sequencing, dependency tracking, risk surfaced early, cross-functional collaboration, UAT coordination, handover and documentation</p></div>
+      <div><h3>Support operations</h3><p>Triage and severity models, SLA management, escalations management, support coordination with developers, backlog recovery, client offboarding</p></div>
+      <div><h3>Bid and tender</h3><p>Compliance matrices, RFI, RFT and EOI responses, commercial narrative, submission QA</p></div>
+      <div><h3>Platforms</h3><p>NetSuite, including SuiteCommerce; WooCommerce; Drupal; WordPress; Google Workspace</p></div>
+      <div><h3>Tools</h3><p>ClickUp, Jira, Freshdesk, HubSpot, Airtable, Apollo</p></div>
+      <div><h3>Ways of working</h3><p>Asynchronous communication, written handover, coordination across time zones, stakeholder updates people can act on</p></div>
+    </div>
+  </section>
+
+  <section class="writing">
+    <h2>Selected writing · abhishekkc.vercel.app</h2>
+    <ul>
+      <li>Shipping NetSuite changes to a client who cannot take downtime <span>Sep 2026</span></li>
+      <li>Taking over a support backlog nobody wants to own <span>Jul 2026</span></li>
+      <li>When your address validation provider fails mid-checkout <span>May 2026</span></li>
+      <li>What five years in support queues taught me about scoping <span>Mar 2026</span></li>
+    </ul>
+  </section>
+
+  <div class="foot"><span>Abhishek KC · Project Delivery</span><span>Updated October 2026</span></div>
+</main>
+</body>
+</html>
